@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#05070a">
+  <title>CVE Sentinel</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <div class="brand">CVE<span>SENTINEL</span></div>
+      <div class="subtitle">Cyber Vulnerability Intelligence</div>
+    </div>
+    <div id="updated" class="updated">Loading…</div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <p class="eyebrow">SECURITY MONITOR</p>
+        <h1>Vulnerability intelligence, without the noise.</h1>
+        <p class="hero-copy">
+          Daily CVE collection enriched with CISA KEV and CVSS information.
+        </p>
+      </div>
+      <div class="status"><span></span> ONLINE DATASET</div>
+    </section>
+
+    <section class="stats" id="stats"></section>
+
+    <section class="controls">
+      <input id="search" type="search" placeholder="Search CVE, vendor, product or description…">
+      <select id="severity">
+        <option value="">All severities</option>
+        <option>CRITICAL</option>
+        <option>HIGH</option>
+        <option>MEDIUM</option>
+        <option>LOW</option>
+        <option>UNKNOWN</option>
+      </select>
+      <select id="kev">
+        <option value="">All vulnerabilities</option>
+        <option value="true">CISA KEV only</option>
+        <option value="false">Not in KEV</option>
+      </select>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>Latest CVEs</h2>
+        <span id="count"></span>
+      </div>
+      <div id="cves" class="grid"></div>
+    </section>
+  </main>
+
+  <footer>
+    CVE Sentinel · NVD + CISA KEV · Built for defensive vulnerability intelligence
+  </footer>
+
+  <script src="./app.js"></script>
+</body>
+</html>
