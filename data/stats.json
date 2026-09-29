@@ -1,8 +1,8 @@
 {
-  "generated_at": null,
-  "total": 0,
-  "critical": 0,
-  "high": 0,
+  "generated_at": "2026-09-29T14:45:47.319181+00:00",
+  "total": 5,
+  "critical": 3,
+  "high": 2,
   "medium": 0,
   "low": 0,
   "unknown": 0,
