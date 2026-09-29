@@ -104,7 +104,8 @@ def alert_block(item):
         f"📊 CVSS: {score_text} — {severity_fr}\n"
         f"{kev}\n"
         f"📝 {text}\n"
-        f"🔗 {item['url']}"
+        f"🔗 NVD: {item['url']}\n"
+        f"💣 Exploit-DB: https://www.exploit-db.com/search?cve={item['id'].replace('CVE-', '')}"
     )
 
 
