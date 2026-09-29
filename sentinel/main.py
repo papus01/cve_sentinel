@@ -81,10 +81,18 @@ def normalize(cve, kev):
 
 
 def alert_block(item):
-    kev = "⚠️ CISA KEV — EXPLOITED" if item["kev"] else "ℹ️ Not listed in CISA KEV"
+    kev = "⚠️ CISA KEV — EXPLOITÉE" if item["kev"] else "ℹ️ Non listée dans la CISA KEV"
 
     score = item["cvss"]
     score_text = f"{score:.1f}" if isinstance(score, (int, float)) else "N/A"
+    
+    severities = {
+        "CRITICAL": "CRITIQUE",
+        "HIGH": "ÉLEVÉE",
+        "MEDIUM": "MOYENNE",
+        "LOW": "FAIBLE",
+    }
+    severity_fr = severities.get(item['severity'], item['severity'])
 
     text = " ".join(item["description"].split())
 
@@ -93,7 +101,7 @@ def alert_block(item):
 
     return (
         f"🔴 {item['id']}\n"
-        f"📊 CVSS: {score_text} — {item['severity']}\n"
+        f"📊 CVSS: {score_text} — {severity_fr}\n"
         f"{kev}\n"
         f"📝 {text}\n"
         f"🔗 {item['url']}"
@@ -104,7 +112,7 @@ def build_messages(items):
     header = (
         f"🛡️ CVE SENTINEL\n"
         f"📅 {datetime.now(timezone.utc).strftime('%Y-%m-%d')}\n"
-        f"🚨 {len(items)} new vulnerability alert(s)\n\n"
+        f"🚨 {len(items)} nouvelle(s) alerte(s) de vulnérabilité\n\n"
     )
 
     messages = []
