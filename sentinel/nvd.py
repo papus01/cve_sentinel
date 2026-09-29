@@ -13,7 +13,6 @@ def fetch_recent(hours=27):
         "pubEndDate": now.strftime("%Y-%m-%dT%H:%M:%S.999Z"),
         "resultsPerPage": 2000,
         "startIndex": 0,
-        "sortBy": "publishDate",
     }
 
     headers = {"User-Agent": "CVE-Sentinel/1.0"}
