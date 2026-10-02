@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-10-01T15:28:58.533091+00:00",
-  "total": 55,
-  "critical": 9,
-  "high": 46,
+  "generated_at": "2026-10-02T14:45:57.982416+00:00",
+  "total": 85,
+  "critical": 16,
+  "high": 69,
   "medium": 0,
   "low": 0,
   "unknown": 0,
-  "kev": 0
+  "kev": 1
 }
