@@ -2,7 +2,7 @@ name: CVE Sentinel
 
 on:
   schedule:
-    # 08:17 UTC every day. Avoids the top of the hour.
+    # 08:17 UTC chaque jour — évite le pic de la pleine heure
     - cron: "17 8 * * *"
   workflow_dispatch:
 
@@ -33,10 +33,10 @@ jobs:
 
       - name: Collect vulnerabilities and send alerts
         env:
+          # ── Secrets (valeurs sensibles) ──────────────────────────────────
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
-
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
           SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
@@ -44,10 +44,26 @@ jobs:
           EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
           EMAIL_TO: ${{ secrets.EMAIL_TO }}
 
+          # ── Variables (valeurs non sensibles) ────────────────────────────
+          # Politique de notification
+          ALERT_CRITICAL: ${{ vars.ALERT_CRITICAL }}
+          ALERT_HIGH: ${{ vars.ALERT_HIGH }}
+          ALERT_MEDIUM: ${{ vars.ALERT_MEDIUM }}
+          ALERT_LOW: ${{ vars.ALERT_LOW }}
+          ALERT_KEV: ${{ vars.ALERT_KEV }}
+          ALERT_ALL_NEW_CVES: ${{ vars.ALERT_ALL_NEW_CVES }}
+          NOTIFICATION_MODE: ${{ vars.NOTIFICATION_MODE }}
+
+          # Collecte
           MIN_CVSS: ${{ vars.MIN_CVSS }}
           MAX_CVES: ${{ vars.MAX_CVES }}
+          LOOKBACK_HOURS: ${{ vars.LOOKBACK_HOURS }}
+          MAX_LOOKBACK_DAYS: ${{ vars.MAX_LOOKBACK_DAYS }}
+
+          # Divers
           KEYWORDS: ${{ vars.KEYWORDS }}
           SEND_EMPTY_REPORT: ${{ vars.SEND_EMPTY_REPORT }}
+
         run: python -m sentinel.main
 
       - name: Commit updated vulnerability data
@@ -56,19 +72,25 @@ jobs:
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add data/
-            git commit -m "chore: update CVE intelligence data"
+            git commit -m "chore: update CVE intelligence data [skip ci]"
             git push
           else
-            echo "No data changes."
+            echo "No data changes to commit."
           fi
 
   deploy:
     needs: collect
     runs-on: ubuntu-latest
 
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: main  # Toujours déployer le dernier commit (après le push de collect)
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -79,4 +101,5 @@ jobs:
           path: "."
 
       - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
