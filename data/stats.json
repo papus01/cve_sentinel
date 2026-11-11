@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-11-10T16:26:04.834080+00:00",
+  "generated_at": "2026-11-11T16:12:55.450124+00:00",
   "total": 5000,
-  "today": 637,
-  "critical": 375,
-  "high": 1662,
-  "medium": 1694,
-  "low": 282,
-  "unknown": 987,
-  "kev": 2
+  "today": 2019,
+  "critical": 312,
+  "high": 2031,
+  "medium": 1683,
+  "low": 223,
+  "unknown": 751,
+  "kev": 3
 }
